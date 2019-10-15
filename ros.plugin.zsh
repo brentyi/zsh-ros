@@ -30,7 +30,7 @@ function getip() {
     if [[ "$OSTYPE" =~ ^darwin ]]; then
         echo `ipconfig getifaddr "$1"`
     else
-        echo `ifconfig "$1" | awk '/inet/ { print $2 } ' | sed -e s/addr://`
+        echo `ifconfig "$1" | awk '/inet / { print $2 } ' | sed -e s/addr://`
     fi
 }
 compdef "_arguments '1:Network Interface:_net_interfaces'" getip
