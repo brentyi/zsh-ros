@@ -1,0 +1,2 @@
+#compdef getip
+_arguments '1:Network Interface:_net_interfaces'

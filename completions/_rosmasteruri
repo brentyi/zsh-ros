@@ -1,0 +1,2 @@
+#compdef rosmasteruri
+_arguments '2:Network Interface:_net_interfaces'

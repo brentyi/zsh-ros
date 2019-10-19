@@ -19,7 +19,6 @@ function rosmasteruri() {
     echo ROS_MASTER_URI=$ROS_MASTER_URI
     echo ROS_IP=$ROS_IP
 }
-compdef "_arguments '2:Network Interface:_net_interfaces'" rosmasteruri
 
 function getip() {
     if [ "$#" -ne 1 ]; then
@@ -30,14 +29,17 @@ function getip() {
     if [[ "$OSTYPE" =~ ^darwin ]]; then
         echo `ipconfig getifaddr "$1"`
     else
-        echo `ifconfig "$1" | awk '/inet / { print $2 } ' | sed -e s/addr://`
+        # echo `ifconfig "$1" | awk '/inet / { print $2 } ' | sed -e s/addr://`
+        ip -4 addr show $1 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
     fi
 }
-compdef "_arguments '1:Network Interface:_net_interfaces'" getip
 
-# indicator for current ros master
+# Autocomplete
+fpath+="${0:h}/completions"
+
+# Indicator for current ros master
 if [ -n "$RPS1" ]; then
-    # decoupling workaround
+    # Decoupling workaround
     RPROMPT=$RPS1
 fi
 if [[ ! $RPROMPT =~ '$(ros_info)' ]]; then
